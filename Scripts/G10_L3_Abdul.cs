@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -54,7 +54,7 @@ public class G10_L3_Abdul : MonoBehaviour
             if (move > 0)
             {
                 move = move - 1;
-                direction.z = direction.z - 200f;
+                direction.z = direction.z - 120f;
                 this.transform.position = new Vector3(direction.x, direction.y, direction.z);
             }
         }
@@ -63,8 +63,8 @@ public class G10_L3_Abdul : MonoBehaviour
             if (move < word.Length - 1)
             {
                 move = move + 1;
-                direction.x = direction.x + 2;
-                this.transform.position = new Vector3(direction.x, 2.3f, 0);
+                direction.z = direction.z + 120f;
+                this.transform.position = new Vector3(direction.x, direction.y, direction.z);
             }
         }
     }

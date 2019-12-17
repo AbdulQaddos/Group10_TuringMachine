@@ -397,5 +397,10 @@ class TuringMachine
         position += (int)movement;
     }
 }
-
+public enum Movement
+{
+    L = -1,
+    H = 0,
+    R = 1
+}
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 public class G10_L2_Faiza : MonoBehaviour
 {
     public float spinaxis = 50.0f;
-    public GameObject windmill;
+    
     public InputField input;
     public Button btn;
     public Button btn2;
@@ -28,7 +28,7 @@ public class G10_L2_Faiza : MonoBehaviour
     char[] word;
     private char[] copytapeChar;
     Vector3 Position;
-    int move = 1;
+    
     int counter = 0;
     int tapemove, tapemove2;
     public Vector3 header = new Vector3(-2, 2.3f, 0);
@@ -51,25 +51,8 @@ public class G10_L2_Faiza : MonoBehaviour
         {
             runTM();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (move > 0)
-            {
-                move = move - 1;
-                header.x = header.x - 3;
-                this.transform.position = new Vector3(header.x, 4f, 0);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (move < word.Length - 1)
-            {
-                move = move + 1;
-                header.x = header.x + 3;
-                this.transform.position = new Vector3(header.x, 4f, 0);
-            }
-        }
-        windmill.transform.Rotate(0, 0, (spinaxis * Time.deltaTime));
+        
+       
     }
 
     private void runTM()

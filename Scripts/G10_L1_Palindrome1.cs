@@ -47,24 +47,7 @@ public class G10_L1_Palindrome1 : MonoBehaviour
         {
             runTM();
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if (move > 0)
-            {
-                move = move - 1;
-                camerMove.x = camerMove.x - 2;
-                this.transform.position = new Vector3(camerMove.x, 2.3f, 0);
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (move < word.Count - 1)
-            {
-                move = move + 1;
-                camerMove.x = camerMove.x + 2;
-                this.transform.position = new Vector3(camerMove.x, 2.3f, 0);
-            }
-        }
+        
     }
 
     private void runTM()

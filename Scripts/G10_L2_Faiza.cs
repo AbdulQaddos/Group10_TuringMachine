@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 public class G10_L2_Faiza : MonoBehaviour
 {
-    public float spinaxis = 50.0f;
-    
+   
     public InputField input;
     public Button btn;
     public Button btn2;
@@ -28,7 +27,7 @@ public class G10_L2_Faiza : MonoBehaviour
     char[] word;
     private char[] copytapeChar;
     Vector3 Position;
-    
+
     int counter = 0;
     int tapemove, tapemove2;
     public Vector3 header = new Vector3(-2, 2.3f, 0);
@@ -52,14 +51,13 @@ public class G10_L2_Faiza : MonoBehaviour
             runTM();
         }
         
-       
     }
 
     private void runTM()
     {
         if (turing.current_state != States.failed && turing.current_state != States.q13)
         {
-            if (turing.current_state != States.q13 || turing.moveCurrent1 != Movement.H && turing.moveCurrent2 != Movement.H)
+            if (turing.current_state != States.q13 || turing.moveCurrent1 != MoveTape.H && turing.moveCurrent2 != MoveTape.H)
             {
                 counter = counter + 1;
                 //get next state after the machine reads the current character
@@ -70,16 +68,16 @@ public class G10_L2_Faiza : MonoBehaviour
                 turing.currentChar2 = copytapeChar[turing.position2];
                 changeTapeCharacter();
                 cubemusic.Play();
-                if (turing.moveCurrent1 == Movement.R)
+                if (turing.moveCurrent1 == MoveTape.R)
                     tapemove = -1;
-                else if (turing.moveCurrent1 == Movement.L)
+                else if (turing.moveCurrent1 == MoveTape.L)
                     tapemove = 1;
                 else
                     tapemove = 0;
 
-                if (turing.moveCurrent2 == Movement.R)
+                if (turing.moveCurrent2 == MoveTape.R)
                     tapemove2 = -1;
-                else if (turing.moveCurrent2 == Movement.L)
+                else if (turing.moveCurrent2 == MoveTape.L)
                     tapemove2 = 1;
                 else
                     tapemove2 = 0;
@@ -102,7 +100,7 @@ public class G10_L2_Faiza : MonoBehaviour
             message.text = word[turing.position1].ToString();
         }
 
-        if (turing.current_state == States.q13 && turing.moveCurrent1 == Movement.H && turing.moveCurrent2 == Movement.H)
+        if (turing.current_state == States.q13 && turing.moveCurrent1 == MoveTape.H && turing.moveCurrent2 == MoveTape.H)
         {
             // turing.current_state = States.failed;
             message.color = Color.green;
@@ -110,7 +108,7 @@ public class G10_L2_Faiza : MonoBehaviour
             reset.gameObject.SetActive(true);
             btn2.gameObject.SetActive(true);
         }
-        else if (turing.current_state != States.q13 && turing.moveCurrent1 == Movement.H && turing.moveCurrent2 == Movement.H)
+        else if (turing.current_state != States.q13 && turing.moveCurrent1 == MoveTape.H && turing.moveCurrent2 == MoveTape.H)
         {
             turing.current_state = States.failed;
             message.color = Color.red;
@@ -259,8 +257,8 @@ class Prime
     public char symbol = 'Δ';
     public char replaceChar1;
     public char replaceChar2;
-    public Movement moveCurrent1;
-    public Movement moveCurrent2;
+    public MoveTape moveCurrent1;
+    public MoveTape moveCurrent2;
 
     public void Read()
     {
@@ -272,8 +270,8 @@ class Prime
                     {
 
                         current_state = States.q0;
-                        moveCurrent1 = Movement.R;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.R;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = 'a';
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -284,8 +282,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q1;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -296,8 +294,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                     }
                     break;
                 }
@@ -306,8 +304,8 @@ class Prime
                     if (currentChar1 == 'a' && currentChar2 == 'x')
                     {
                         current_state = States.q1;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'a';
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -318,8 +316,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q2;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -329,8 +327,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -340,8 +338,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q3;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -352,8 +350,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -363,8 +361,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q4;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -374,8 +372,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q14;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -384,8 +382,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                     }
                     break;
                 }
@@ -394,8 +392,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q5;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -405,8 +403,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q13;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -415,8 +413,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                     }
                     break;
                 }
@@ -425,8 +423,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q6;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -436,8 +434,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q6;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -448,8 +446,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -459,8 +457,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'y')
                     {
                         current_state = States.q6;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -470,8 +468,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q7;
-                        moveCurrent1 = Movement.R;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.R;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -483,8 +481,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -494,8 +492,8 @@ class Prime
                     if (currentChar1 == 'a' && currentChar2 == 'y')
                     {
                         current_state = States.q7;
-                        moveCurrent1 = Movement.R;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.R;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = 'a';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -506,8 +504,8 @@ class Prime
                     else if (currentChar1 == 'B' && currentChar2 == 'y')
                     {
                         current_state = States.q7;
-                        moveCurrent1 = Movement.R;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.R;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = 'B';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -518,8 +516,8 @@ class Prime
                     else if (currentChar1 == 'B' && currentChar2 == 'x')
                     {
                         current_state = States.q8;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'B';
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -530,8 +528,8 @@ class Prime
                     else if (currentChar1 == 'a' && currentChar2 == 'x')
                     {
                         current_state = States.q8;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'a';
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -542,8 +540,8 @@ class Prime
                     else if (currentChar1 == 'a' && currentChar2 == symbol)
                     {
                         current_state = States.q8;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'a';
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -554,8 +552,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == 'y')
                     {
                         current_state = States.q10;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -566,8 +564,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q14;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = 'x';
                         lastPosition1 = position1;
@@ -576,8 +574,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q14;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -587,8 +585,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -598,8 +596,8 @@ class Prime
                     if (currentChar1 == 'a' && currentChar2 == 'y')
                     {
                         current_state = States.q9;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'B';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -609,8 +607,8 @@ class Prime
                     else if (currentChar1 == 'B' && currentChar2 == 'y')
                     {
                         current_state = States.q9;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'B';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -621,8 +619,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -633,8 +631,8 @@ class Prime
                     if (currentChar1 == 'B' && currentChar2 == symbol)
                     {
                         current_state = States.q7;
-                        moveCurrent1 = Movement.R;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.R;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = 'B';
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -645,8 +643,8 @@ class Prime
                     else if (currentChar1 == 'B' && currentChar2 == 'y')
                     {
                         current_state = States.q9;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = 'B';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -657,8 +655,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -669,8 +667,8 @@ class Prime
                     if (currentChar1 == 'a' && currentChar2 == 'y')
                     {
                         current_state = States.q10;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = 'a';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -680,8 +678,8 @@ class Prime
                     else if (currentChar1 == 'B' && currentChar2 == 'y')
                     {
                         current_state = States.q10;
-                        moveCurrent1 = Movement.L;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.L;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = 'B';
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -691,8 +689,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == 'y')
                     {
                         current_state = States.q11;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -703,8 +701,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -714,8 +712,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'y')
                     {
                         current_state = States.q11;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.R;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.R;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -725,8 +723,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == symbol)
                     {
                         current_state = States.q13;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                         replaceChar1 = symbol;
                         replaceChar2 = symbol;
                         lastPosition1 = position1;
@@ -735,8 +733,8 @@ class Prime
                     else if (currentChar1 == symbol && currentChar2 == 'x')
                     {
                         current_state = States.q12;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -746,8 +744,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
                     }
                     break;
                 }
@@ -756,8 +754,8 @@ class Prime
                     if (currentChar1 == symbol && currentChar2 == 'y')
                     {
                         current_state = States.q6;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.L;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.L;
                         replaceChar1 = symbol;
                         replaceChar2 = 'y';
                         lastPosition1 = position1;
@@ -767,8 +765,8 @@ class Prime
                     else
                     {
                         current_state = States.failed;
-                        moveCurrent1 = Movement.H;
-                        moveCurrent2 = Movement.H;
+                        moveCurrent1 = MoveTape.H;
+                        moveCurrent2 = MoveTape.H;
 
                     }
                     break;
@@ -783,9 +781,9 @@ public enum States
 {
     q0, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, q11, q12, q13, q14, failed,
 }
-public enum Movement
+public enum MoveTape
 {
-    L = -1,
-    H = 0,
-    R = 1
+    L,
+    H,
+    R
 }
